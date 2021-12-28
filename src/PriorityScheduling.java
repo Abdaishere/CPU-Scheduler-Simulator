@@ -4,7 +4,7 @@ import java.util.Comparator;
 public class PriorityScheduling {
 
     public static void start(ArrayList<Process> processes, int age) {
-        processes.sort(new SJFComparator());
+        processes.sort(new PComparator());
         int time = processes.get(0).arrivalTime;
         while (!processes.isEmpty()) {
             int shortest = 0;
@@ -22,8 +22,8 @@ public class PriorityScheduling {
         }
     }
 
-    public static class SJFComparator implements Comparator<Process> {
-        // arrive, burst, age
+    public static class PComparator implements Comparator<Process> {
+
         @Override
         public int compare(Process o1, Process o2) {
             if (o1.arrivalTime != o2.arrivalTime)

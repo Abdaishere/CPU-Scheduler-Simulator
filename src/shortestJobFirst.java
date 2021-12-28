@@ -22,7 +22,7 @@ public class shortestJobFirst {
     }
 
     public static class SJFComparator implements Comparator<Process> {
-        // arrive, burst, age
+
         @Override
         public int compare(Process o1, Process o2) {
             if (o1.arrivalTime != o2.arrivalTime)
