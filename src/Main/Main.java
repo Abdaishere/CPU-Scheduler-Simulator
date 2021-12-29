@@ -19,7 +19,7 @@ public class Main {
             int burstTime = Integer.parseInt(input.next());
             int priorityNumber = Integer.parseInt(input.next());
             int quantumNumber = Integer.parseInt(input.next());
-            System.out.printf("%S %d %d %d %d %n", name, arrivalTime, burstTime, priorityNumber, quantumNumber);
+//            System.out.printf("%S %d %d %d %d %n", name, arrivalTime, burstTime, priorityNumber, quantumNumber);
             processes1.add(new Process(name, Color.BLACK, arrivalTime, burstTime, priorityNumber, quantumNumber, processes1.size() - 1));
             size--;
         }
