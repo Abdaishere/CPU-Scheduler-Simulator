@@ -24,10 +24,10 @@ public class Main {
             size--;
         }
 
-        shortestJobFirst.start((ArrayList<Process>) processes1.clone(), 11);
-        System.out.println();
-        PriorityScheduling.start((ArrayList<Process>) processes1.clone(), 0.5F, 11);
-        System.out.println();
+//        shortestJobFirst.start((ArrayList<Process>) processes1.clone(), 11);
+//        System.out.println();
+//        PriorityScheduling.start((ArrayList<Process>) processes1.clone(), 0.5F, 11);
+//        System.out.println();
         AGAT.start((ArrayList<Process>) processes1.clone());
     }
 }
