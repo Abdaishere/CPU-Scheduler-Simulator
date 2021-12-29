@@ -13,12 +13,14 @@ public class Main {
         Scanner input = new Scanner(System.in);
         int size = Integer.parseInt(input.nextLine());
         ArrayList<Process> processes1 = new ArrayList<>();
+        ArrayList<String> order = new ArrayList<>();
         while (size != 0) {
             String name = input.next();
             int arrivalTime = Integer.parseInt(input.next());
             int burstTime = Integer.parseInt(input.next());
             int priorityNumber = Integer.parseInt(input.next());
             int quantumNumber = Integer.parseInt(input.next());
+            order.add(name);
             processes1.add(new Process(name, arrivalTime, burstTime, priorityNumber, quantumNumber, processes1.size() - 1));
             size--;
         }
@@ -34,7 +36,7 @@ public class Main {
 //
 //        System.out.println();
 
-        PlotWindow agat = new PlotWindow("AGAT", AGAT.start((ArrayList<Process>) processes1.clone()), (ArrayList<Process>) processes1.clone());
+        PlotWindow agat = new PlotWindow("AGAT", AGAT.start((ArrayList<Process>) processes1.clone()), order);
         agat.pack();
         RefineryUtilities.centerFrameOnScreen(agat);
         agat.setVisible(true);

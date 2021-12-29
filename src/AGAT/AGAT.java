@@ -94,7 +94,7 @@ public class AGAT {
     public static void setV1(ArrayList<Process> tmp) {
 
         if (tmp.get(tmp.size() - 1).arrivalTime > 10) {
-            V1 = (tmp.get(tmp.size() - 1).arrivalTime) / 10;
+            V1 = (float) ((tmp.get(tmp.size() - 1).arrivalTime) / 10.0);
         } else {
             V1 = 1;
         }
