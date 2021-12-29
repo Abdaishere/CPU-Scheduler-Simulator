@@ -4,7 +4,6 @@ import java.awt.*;
 
 public class Process {
     public String Name;
-    public Color color;
     public int arrivalTime;
     public int burstTime;
     public int priorityNumber;
@@ -14,9 +13,8 @@ public class Process {
     public int ceil;
     public int PID;
 
-    public Process(String name, Color color, int arrivalTime, int burstTime, int priorityNumber, int quantum ,int PID) {
+    public Process(String name, int arrivalTime, int burstTime, int priorityNumber, int quantum ,int PID) {
         Name = name;
-        this.color = color;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.priorityNumber = priorityNumber;
@@ -30,14 +28,6 @@ public class Process {
 
     public void setName(String name) {
         Name = name;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
     }
 
     public void setArrivalTime(int arrivalTime) {

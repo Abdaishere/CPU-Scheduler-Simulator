@@ -2,13 +2,16 @@ package PriorityScheduling;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+
 import Main.Process;
+import Main.duration;
 
 public class PriorityScheduling {
 
-    public static void start(ArrayList<Process> processes, float contextSwitching, int age) {
+    public static ArrayList<duration> start(ArrayList<Process> processes, int contextSwitching, int age) {
+        ArrayList<duration> durations = new ArrayList<>();
         processes.sort(new PComparator());
-        float time = processes.get(0).arrivalTime;
+        int time = processes.get(0).arrivalTime;
         while (!processes.isEmpty()) {
             int shortest = 0;
             for (int j = 0; j < processes.size() && processes.get(j).arrivalTime <= time; j++) {
@@ -20,9 +23,10 @@ public class PriorityScheduling {
                 }
             }
             System.out.println(processes.get(shortest).Name);
-            time += processes.get(shortest).burstTime + contextSwitching;
+            durations.add(new duration(processes.get(shortest).Name, time, time += processes.get(shortest).burstTime + contextSwitching));
             processes.remove(shortest);
         }
+        return durations;
     }
 
     public static class PComparator implements Comparator<Process> {

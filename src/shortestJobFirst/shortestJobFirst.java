@@ -1,14 +1,16 @@
 package shortestJobFirst;
 
 import Main.Process;
+import Main.duration;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class shortestJobFirst {
-    public static void start(ArrayList<Process> processes, int age) {
+    public static ArrayList<duration> start(ArrayList<Process> processes, int age) {
+        ArrayList<duration> durations = new ArrayList<>();
         processes.sort(new SJFComparator());
-        float time = processes.get(0).arrivalTime;
+        int time = processes.get(0).arrivalTime;
         while (!processes.isEmpty()) {
             int shortest = 0;
             for (int j = 0; j < processes.size() && processes.get(j).arrivalTime <= time; j++) {
@@ -19,10 +21,10 @@ public class shortestJobFirst {
                     shortest = j;
                 }
             }
-            System.out.println(processes.get(shortest).Name);
-            time += processes.get(shortest).burstTime;
+            durations.add(new duration(processes.get(shortest).Name, time, time += processes.get(shortest).burstTime));
             processes.remove(shortest);
         }
+        return durations;
     }
 
     public static class SJFComparator implements Comparator<Process> {

@@ -1,12 +1,11 @@
 package Main;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import AGAT.*;
-import PriorityScheduling.*;
+import org.jfree.ui.RefineryUtilities;
 import shortestJobFirst.*;
+import PriorityScheduling.*;
 
 
 public class Main {
@@ -20,15 +19,20 @@ public class Main {
             int burstTime = Integer.parseInt(input.next());
             int priorityNumber = Integer.parseInt(input.next());
             int quantumNumber = Integer.parseInt(input.next());
-            processes1.add(new Process(name, Color.BLACK, arrivalTime, burstTime, priorityNumber, quantumNumber, processes1.size() - 1));
+            processes1.add(new Process(name, arrivalTime, burstTime, priorityNumber, quantumNumber, processes1.size() - 1));
             size--;
         }
+        final PlotWindow ShortestJobFirst = new PlotWindow("Shortest Job First", shortestJobFirst.start((ArrayList<Process>) processes1.clone(), 100));
+        ShortestJobFirst.pack();
+        RefineryUtilities.centerFrameOnScreen(ShortestJobFirst);
+        ShortestJobFirst.setVisible(true);
+        final PlotWindow priorityScheduling = new PlotWindow("Priority Scheduling", PriorityScheduling.start((ArrayList<Process>) processes1.clone(), 1, 100));
+        priorityScheduling.pack();
+        RefineryUtilities.centerFrameOnScreen(priorityScheduling);
+        priorityScheduling.setVisible(true);
 
-//        shortestJobFirst.start((ArrayList<Process>) processes1.clone(), 11);
 //        System.out.println();
-//        PriorityScheduling.start((ArrayList<Process>) processes1.clone(), 0.5F, 11);
-//        System.out.println();
-        AGAT.start((ArrayList<Process>) processes1.clone());
+//        AGAT.start((ArrayList<Process>) processes1.clone());
     }
 }
 
