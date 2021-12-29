@@ -1,16 +1,18 @@
+package Main;
+
 import java.awt.*;
 
 public class Process {
-    String Name;
-    Color color;
-    int arrivalTime;
-    int burstTime;
-    int priorityNumber;
-    int waitingTime;
-    int turnAroundTime;
-    int quantum;
-    int ceil;
-    int PID;
+    public String Name;
+    public Color color;
+    public int arrivalTime;
+    public int burstTime;
+    public int priorityNumber;
+    public int waitingTime;
+    public int turnAroundTime;
+    public int quantum;
+    public int ceil;
+    public int PID;
 
     public Process(String name, Color color, int arrivalTime, int burstTime, int priorityNumber, int quantum ,int PID) {
         Name = name;

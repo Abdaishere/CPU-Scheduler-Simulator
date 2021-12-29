@@ -1,10 +1,14 @@
+package shortestJobFirst;
+
+import Main.Process;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 
 public class shortestJobFirst {
     public static void start(ArrayList<Process> processes, int age) {
         processes.sort(new SJFComparator());
-        int time = processes.get(0).arrivalTime;
+        float time = processes.get(0).arrivalTime;
         while (!processes.isEmpty()) {
             int shortest = 0;
             for (int j = 0; j < processes.size() && processes.get(j).arrivalTime <= time; j++) {

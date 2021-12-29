@@ -1,11 +1,14 @@
+package PriorityScheduling;
+
 import java.util.ArrayList;
 import java.util.Comparator;
+import Main.Process;
 
 public class PriorityScheduling {
 
-    public static void start(ArrayList<Process> processes, int age) {
+    public static void start(ArrayList<Process> processes, float contextSwitching, int age) {
         processes.sort(new PComparator());
-        int time = processes.get(0).arrivalTime;
+        float time = processes.get(0).arrivalTime;
         while (!processes.isEmpty()) {
             int shortest = 0;
             for (int j = 0; j < processes.size() && processes.get(j).arrivalTime <= time; j++) {
@@ -17,7 +20,7 @@ public class PriorityScheduling {
                 }
             }
             System.out.println(processes.get(shortest).Name);
-            time += processes.get(shortest).burstTime + 1;
+            time += processes.get(shortest).burstTime + contextSwitching;
             processes.remove(shortest);
         }
     }
