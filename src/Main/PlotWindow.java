@@ -3,7 +3,7 @@ package Main;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
+import java.util.LinkedHashMap;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -24,11 +24,11 @@ public class PlotWindow extends ApplicationFrame {
 
     public HashMap<String, Task> tasks;
 
-    public PlotWindow(final String title, ArrayList<duration> processes) {
+    public PlotWindow(final String title, ArrayList<duration> processes, ArrayList<Process> order) {
 
         super(title);
 
-        final GanttCategoryDataset dataset = createDataset(processes);
+        final GanttCategoryDataset dataset = createDataset(processes, order);
         final JFreeChart chart = createChart(dataset);
         BarRenderer renderer = (BarRenderer) chart.getCategoryPlot().getRenderer();
         renderer.setItemMargin(-2);
@@ -39,16 +39,17 @@ public class PlotWindow extends ApplicationFrame {
 
     }
 
-    public GanttCategoryDataset createDataset(ArrayList<duration> processes) {
-        tasks = new HashMap<>();
+    public GanttCategoryDataset createDataset(ArrayList<duration> processes, ArrayList<Process> order) {
+        tasks = new LinkedHashMap<>();
+        for (int i = 0; i < order.size(); i++) {
+            tasks.put(order.get(i).Name, new Task(order.get(i).getName(), new SimpleTimePeriod(processes.get(0).start, processes.get(processes.size() - 1).end)));
+        }
+
         for (int i = 0; i < processes.size(); i++) {
             if (tasks.get(processes.get(i).name) != null) {
                 tasks.get(processes.get(i).name).addSubtask(new Task(processes.get(i).name, new SimpleTimePeriod(processes.get(i).start, processes.get(i).end)));
-            } else {
-                tasks.put(processes.get(i).name, new Task(processes.get(i).name, new SimpleTimePeriod(processes.get(i).start, processes.get(i).end)));
             }
         }
-
 
         final TaskSeriesCollection collection = new TaskSeriesCollection();
         tasks.forEach((K, V) -> {

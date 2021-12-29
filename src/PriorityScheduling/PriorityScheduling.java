@@ -22,7 +22,6 @@ public class PriorityScheduling {
                     shortest = j;
                 }
             }
-            System.out.println(processes.get(shortest).Name);
             durations.add(new duration(processes.get(shortest).Name, time, time += processes.get(shortest).burstTime + contextSwitching));
             processes.remove(shortest);
         }

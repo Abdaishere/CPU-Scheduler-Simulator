@@ -1,6 +1,7 @@
 package AGAT;
 
 import Main.Process;
+import Main.duration;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,11 +16,12 @@ public class AGAT {
     public static float V1;
     public static float V2;
 
-    public static void start(ArrayList<Process> processes) {
+    public static ArrayList<duration> start(ArrayList<Process> processes) {
+        ArrayList<duration> durations = new ArrayList<>();
         sort(processes, Comparator.comparing(Process::getArrivalTime));
         setV1(processes);
 
-        int time = 0, i = 0;
+        int time = 0, i = 0, lastop = 0;
         while ((i < processes.size() || !readyQueue.isEmpty())) {
 
             for (; i < processes.size(); i++) {
@@ -30,10 +32,14 @@ public class AGAT {
                     break;
                 }
             }
+
             setV2(readyQueue);
             if (readyQueue.get(0).burstTime == 0) {
+
                 //  finishes executing
-                System.out.println(time + " " + readyQueue.get(0).getName());
+                durations.add(new duration(readyQueue.get(0).getName(), lastop, time, "finishes executing"));
+
+                lastop = time;
 
                 readyQueue.get(0).setQuantum(0);
                 deadlist.add(readyQueue.get(0));
@@ -47,8 +53,9 @@ public class AGAT {
             int Factor = getAGATFactor(readyQueue);
             if (readyQueue.get(0).getQuantum() - quantumleft.get(0) >= Math.round(readyQueue.get(0).getQuantum() * 0.4)) {
                 if (readyQueue.get(0).burstTime != 0 && quantumleft.get(0) == 0) {
-                    // finished it’s quantum
-                    System.out.println(time + " " + readyQueue.get(0).getName());
+
+                    durations.add(new duration(readyQueue.get(0).getName(), lastop, time, "finished it’s quantum"));
+                    lastop = time;
 
                     Process p = readyQueue.get(0);
 
@@ -61,8 +68,9 @@ public class AGAT {
                     quantumleft.add(p.getQuantum());
 
                 } else if (Factor != 0) {
-                    // swapped
-                    System.out.println(time + " " + readyQueue.get(0).getName());
+
+                    durations.add(new duration(readyQueue.get(0).getName(), lastop, time, "swapped"));
+                    lastop = time;
 
                     readyQueue.get(0).setQuantum(readyQueue.get(0).getQuantum() + quantumleft.get(0));
                     quantumleft.set(0, readyQueue.get(0).getQuantum());
@@ -76,7 +84,7 @@ public class AGAT {
             quantumleft.set(0, quantumleft.get(0) - 1);
             time++;
         }
-
+        return durations;
     }
 
     public static void sort(ArrayList<Process> processes, Comparator x) {
