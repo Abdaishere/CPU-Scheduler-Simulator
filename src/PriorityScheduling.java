@@ -17,7 +17,7 @@ public class PriorityScheduling {
                 }
             }
             System.out.println(processes.get(shortest).Name);
-            time += processes.get(shortest).burstTime;
+            time += processes.get(shortest).burstTime + 1;
             processes.remove(shortest);
         }
     }
