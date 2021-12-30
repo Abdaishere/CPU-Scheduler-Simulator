@@ -49,20 +49,20 @@ public class PlotWindow extends ApplicationFrame {
     public PlotWindow(final String title, ArrayList<duration> processes) {
 
         super(title);
-        int avarageWait = 0;
-        int avarageTurnaround = 0;
-        HashMap<Integer, Boolean> occured = new HashMap<>();
+        int averageWait = 0;
+        int averageTurnaround = 0;
+        HashMap<Integer, Boolean> occurred = new HashMap<>();
         for (duration Duration : processes) {
-            if (occured.get(Duration.id) == null) {
+            if (occurred.get(Duration.id) == null) {
                 int wait = Duration.start - Duration.arrivalTime;
-                avarageWait += wait;
-                avarageTurnaround += (wait + Duration.burstTime);
+                averageWait += wait;
+                averageTurnaround += (wait + Duration.burstTime);
                 System.out.println(Duration.name + " ,Waiting Time :" + wait + " ,Turnaround Time :" + (wait + Duration.burstTime));
-                occured.put(Duration.id, true);
+                occurred.put(Duration.id, true);
             }
         }
-        System.out.println("The avarage waiting is : " + (avarageWait / processes.size()));
-        System.out.println("The avarage Turnaround is : " + (avarageTurnaround / processes.size()));
+        System.out.println("The average waiting is : " + (averageWait / processes.size()));
+        System.out.println("The average Turnaround is : " + (averageTurnaround / processes.size()));
 
         GanttCategoryDataset dataset = createDataset(processes);
         JFreeChart chart = createChart(dataset);

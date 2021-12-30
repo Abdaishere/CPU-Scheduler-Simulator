@@ -5,10 +5,7 @@ public class Process {
     public int arrivalTime;
     public int burstTime;
     public int priorityNumber;
-    public int waitingTime;
-    public int turnAroundTime;
     public int quantum;
-    public int ceil;
     public int PID;
 
     public Process(String name, int arrivalTime, int burstTime, int priorityNumber, int quantum, int PID) {

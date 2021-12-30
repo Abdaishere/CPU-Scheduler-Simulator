@@ -5,33 +5,20 @@ import Main.duration;
 import java.util.ArrayList;
 
 public class SRTF {
-    class Process implements Comparable<Process> {
+    static class Process implements Comparable<Process> {
 
         @Override
         public int compareTo(Process obj) {
             return getname().compareTo(obj.getname());
         }
 
-        private String name;
-        private int ArrivalTime;
+        private final String name;
+        private final int ArrivalTime;
         private int BurstTime;
         private int completeTime;
         private int StartTime;
         private int EndTime;
-        private int AtTime;
         int PID;
-
-        public void setAtTime(int atTime) {
-            AtTime = atTime;
-        }
-
-        public int getAtTime() {
-            return AtTime;
-        }
-
-        public void setStartTime(int startTime) {
-            StartTime = startTime;
-        }
 
         public int getStartTime() {
             return StartTime;
@@ -39,10 +26,6 @@ public class SRTF {
 
         public int getEndTime() {
             return EndTime;
-        }
-
-        public void setEndTime(int endTime) {
-            EndTime = endTime;
         }
 
         Process(String name, int ArrivalTime, int burst, int startTime, int endTime, int PID) {
@@ -79,12 +62,8 @@ public class SRTF {
             this.completeTime = time;
         }
 
-        public int getCompleteTime() {
-            return this.completeTime;
-        }
-
         public boolean isCompleted() {
-            return this.completeTime != 0;
+            return this.completeTime == 0;
         }
     }
 
@@ -92,7 +71,7 @@ public class SRTF {
 
     private boolean checkCompleted(Process[] pros) {
         for (Process p : pros) {
-            if (!p.isCompleted()) {
+            if (p.isCompleted()) {
                 return false;
             }
         }
@@ -102,18 +81,16 @@ public class SRTF {
     private ArrayList<Process> Gantt_Chart(Process[] pros, int Age) {
 
         int Time = 0;
-        int AtTime = 0;
         while (!checkCompleted(pros)) {
             Process obj = null;
             int minBurstTime = Integer.MAX_VALUE;
 
             for (Process p : pros) {
                 if (Time - p.ArrivalTime > Age) {
-                    minBurstTime = p.getBurst();
                     obj = p;
                     break;
                 }
-                if (!p.isCompleted() && p.getArrivalTime() <= Time && p.getBurst() < minBurstTime) {
+                if (p.isCompleted() && p.getArrivalTime() <= Time && p.getBurst() < minBurstTime) {
                     minBurstTime = p.getBurst();
                     obj = p;
                 }
@@ -124,7 +101,6 @@ public class SRTF {
             if (obj != null) {
                 int arribetime = --Time;
                 Process p = new Process(obj.name, arribetime, obj.BurstTime, arribetime, ++Time, obj.PID);
-                p.setAtTime(AtTime++);
                 processes.add(p);
                 obj.BurstTime--;
 
