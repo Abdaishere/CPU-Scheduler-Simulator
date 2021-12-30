@@ -145,23 +145,27 @@ public class SRTF {
         }
         ArrayList<Process> AllProcess;
         AllProcess = Gantt_Chart(pros, Age);
-        boolean i = false;
+
         for (int j = 0; j < AllProcess.size(); j++) {
             duration tmp;
-            if (i)
-                tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime() + contextSwitching, AllProcess.get(j).getEndTime() + contextSwitching, AllProcess.get(j).PID, "Working", AllProcess.get(j).BurstTime, AllProcess.get(j).ArrivalTime);
-            else
-                tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime(), AllProcess.get(j).getEndTime(), AllProcess.get(j).PID, "Working", AllProcess.get(j).BurstTime, AllProcess.get(j).ArrivalTime);
+
+            tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime(), AllProcess.get(j).getEndTime(), AllProcess.get(j).PID, "Working", AllProcess.get(j).BurstTime, AllProcess.get(j).ArrivalTime);
             while (j < AllProcess.size() && tmp.id == AllProcess.get(j).PID)
                 j++;
 
             j--;
-            if (i)
-                tmp.setEnd(AllProcess.get(j).getEndTime() + contextSwitching);
-            else
-                tmp.setEnd(AllProcess.get(j).getEndTime());
-            i = true;
+            tmp.setEnd(AllProcess.get(j).getEndTime());
             durations.add(tmp);
+        }
+
+        // add contextSwitching
+        for (int i = 1; i < durations.size(); i++) {
+            if (durations.get(i).start == durations.get(i - 1).end) {
+                for (int j = i; j < durations.size(); j++) {
+                    durations.get(j).start += contextSwitching;
+                    durations.get(j).end += contextSwitching;
+                }
+            }
         }
 
         return durations;
