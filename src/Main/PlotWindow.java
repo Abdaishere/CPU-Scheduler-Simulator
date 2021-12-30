@@ -49,16 +49,20 @@ public class PlotWindow extends ApplicationFrame {
     public PlotWindow(final String title, ArrayList<duration> processes) {
 
         super(title);
-        int avarageWait =0;
-        int avarageTurnaround =0;
-        for(duration Duration : processes){
-            int wait =Duration.start-Duration.arrivalTime;
-            avarageWait +=wait;
-            avarageTurnaround +=(wait+Duration.burstTime);
-            System.out.println(Duration.name + " ,Waiting Time :"+ wait + " ,Turnaround Time :"+ (wait+Duration.burstTime));
+        int avarageWait = 0;
+        int avarageTurnaround = 0;
+        HashMap<Integer, Boolean> occured = new HashMap<>();
+        for (duration Duration : processes) {
+            if (occured.get(Duration.id) == null) {
+                int wait = Duration.start - Duration.arrivalTime;
+                avarageWait += wait;
+                avarageTurnaround += (wait + Duration.burstTime);
+                System.out.println(Duration.name + " ,Waiting Time :" + wait + " ,Turnaround Time :" + (wait + Duration.burstTime));
+                occured.put(Duration.id, true);
+            }
         }
-        System.out.println("The avarage waiting is : "+ (avarageWait/processes.size()));
-        System.out.println("The avarage Turnaround is : "+ (avarageTurnaround/processes.size()));
+        System.out.println("The avarage waiting is : " + (avarageWait / processes.size()));
+        System.out.println("The avarage Turnaround is : " + (avarageTurnaround / processes.size()));
 
         GanttCategoryDataset dataset = createDataset(processes);
         JFreeChart chart = createChart(dataset);
@@ -84,7 +88,7 @@ public class PlotWindow extends ApplicationFrame {
 
         for (duration process : processes) {
             if (tasks.get(process.id) == null) {
-                tasks.put(process.id, new Task(process.name, new SimpleTimePeriod(0, processes.get(processes.size()-1).end)));
+                tasks.put(process.id, new Task(process.name, new SimpleTimePeriod(0, processes.get(processes.size() - 1).end)));
             }
             Task t = new Task(process.name, new SimpleTimePeriod(process.start, process.end));
             t.setDescription(process.name);

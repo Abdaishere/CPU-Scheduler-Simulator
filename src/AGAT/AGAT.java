@@ -41,7 +41,7 @@ public class AGAT {
             if (readyQueue.get(0).burstTime == 0) {
 
                 //  finishes executing
-                durations.add(new duration(readyQueue.get(0).getName(), lastop, time, readyQueue.get(0).getPID(), "finishes executing",readyQueue.get(0).burstTime,readyQueue.get(0).arrivalTime));
+                durations.add(new duration(readyQueue.get(0).getName(), lastop, time, readyQueue.get(0).getPID(), "finishes executing", readyQueue.get(0).burstTime, readyQueue.get(0).arrivalTime));
 
                 lastop = time;
 
@@ -61,7 +61,8 @@ public class AGAT {
             if (readyQueue.get(0).getQuantum() - quantumleft.get(0) >= Math.round(readyQueue.get(0).getQuantum() * 0.4)) {
                 if (readyQueue.get(0).burstTime != 0 && quantumleft.get(0) == 0) {
 
-                    durations.add(new duration(readyQueue.get(0).getName(), lastop, time, readyQueue.get(0).getPID(), "finished it’s quantum",readyQueue.get(0).burstTime,readyQueue.get(0).arrivalTime));
+                    System.out.println(time + " factor updated :" + (10 - readyQueue.get(Factor).priorityNumber) + (int) Math.ceil(readyQueue.get(Factor).arrivalTime / V1) + (int) Math.ceil(readyQueue.get(Factor).burstTime / V2) + " " + readyQueue.get(0).getName() + "=>" + readyQueue.get(Factor).getName() + " new quantum " + readyQueue.get(Factor).getQuantum());
+                    durations.add(new duration(readyQueue.get(0).getName(), lastop, time, readyQueue.get(0).getPID(), "finished it’s quantum", readyQueue.get(0).burstTime, readyQueue.get(0).arrivalTime));
                     lastop = time;
 
                     Process p = readyQueue.get(0);
@@ -76,7 +77,8 @@ public class AGAT {
 
                 } else if (Factor != 0) {
 
-                    durations.add(new duration(readyQueue.get(0).getName(), lastop, time, readyQueue.get(0).getPID(), "swapped",readyQueue.get(0).burstTime,readyQueue.get(0).arrivalTime));
+                    System.out.println(time + " factor updated :" + (10 - readyQueue.get(Factor).priorityNumber) + (int) Math.ceil(readyQueue.get(Factor).arrivalTime / V1) + (int) Math.ceil(readyQueue.get(Factor).burstTime / V2) + " " + readyQueue.get(0).getName() + "=>" + readyQueue.get(Factor).getName() + " new quantum " + readyQueue.get(Factor).getQuantum());
+                    durations.add(new duration(readyQueue.get(0).getName(), lastop, time, readyQueue.get(0).getPID(), "swapped", readyQueue.get(0).burstTime, readyQueue.get(0).arrivalTime));
                     lastop = time;
 
                     readyQueue.get(0).setQuantum(readyQueue.get(0).getQuantum() + quantumleft.get(0));

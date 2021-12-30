@@ -143,27 +143,24 @@ public class SRTF {
         for (int i = 0; i < processes1.size(); i++) {
             pros[i] = new Process(processes1.get(i).Name, processes1.get(i).arrivalTime, processes1.get(i).burstTime, processes1.get(i).getPID());
         }
-        /*
-            4
-            p1 0 8
-            p2 1 4
-            p3 2 9
-            p4 3 5
-         */
         ArrayList<Process> AllProcess;
         AllProcess = Gantt_Chart(pros, Age);
-
+        boolean i = false;
         for (int j = 0; j < AllProcess.size(); j++) {
             duration tmp;
-            if (j != 0)
-                tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime() + 1, AllProcess.get(j).getEndTime(), AllProcess.get(j).PID, "Working",AllProcess.get(j).BurstTime,AllProcess.get(j).ArrivalTime);
+            if (i)
+                tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime() + contextSwitching, AllProcess.get(j).getEndTime() + contextSwitching, AllProcess.get(j).PID, "Working", AllProcess.get(j).BurstTime, AllProcess.get(j).ArrivalTime);
             else
-                tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime(), AllProcess.get(j).getEndTime(), AllProcess.get(j).PID, "Working",AllProcess.get(j).BurstTime,AllProcess.get(j).ArrivalTime);
+                tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime(), AllProcess.get(j).getEndTime(), AllProcess.get(j).PID, "Working", AllProcess.get(j).BurstTime, AllProcess.get(j).ArrivalTime);
             while (j < AllProcess.size() && tmp.id == AllProcess.get(j).PID)
                 j++;
 
             j--;
-            tmp.setEnd(AllProcess.get(j).getEndTime());
+            if (i)
+                tmp.setEnd(AllProcess.get(j).getEndTime() + contextSwitching);
+            else
+                tmp.setEnd(AllProcess.get(j).getEndTime());
+            i = true;
             durations.add(tmp);
         }
 
