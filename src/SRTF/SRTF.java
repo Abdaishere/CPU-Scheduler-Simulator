@@ -149,8 +149,6 @@ public class SRTF {
             p4 3 5
          */
         ArrayList<Process> AllProcess;
-        ArrayList<Process> AllProcessAfterSorted;
-
         AllProcess = Gantt_Chart(pros);
 
         for (int j = 0; j < AllProcess.size(); j++) {

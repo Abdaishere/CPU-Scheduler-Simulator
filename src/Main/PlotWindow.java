@@ -74,8 +74,7 @@ public class PlotWindow extends ApplicationFrame {
 
         for (duration process : processes) {
             if (tasks.get(process.id) == null) {
-                tasks.put(process.id, new Task(process.name, new SimpleTimePeriod(process.start, process.end)));
-
+                tasks.put(process.id, new Task(process.name, new SimpleTimePeriod(0, processes.get(processes.size()-1).end)));
             }
             Task t = new Task(process.name, new SimpleTimePeriod(process.start, process.end));
             t.setDescription(process.name);
