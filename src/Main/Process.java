@@ -1,7 +1,5 @@
 package Main;
 
-import java.awt.*;
-
 public class Process {
     public String Name;
     public int arrivalTime;
@@ -30,46 +28,6 @@ public class Process {
         return Name;
     }
 
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public void setArrivalTime(int arrivalTime) {
-        this.arrivalTime = arrivalTime;
-    }
-
-    public int getBurstTime() {
-        return burstTime;
-    }
-
-    public void setBurstTime(int burstTime) {
-        this.burstTime = burstTime;
-    }
-
-    public int getPriorityNumber() {
-        return priorityNumber;
-    }
-
-    public void setPriorityNumber(int priorityNumber) {
-        this.priorityNumber = priorityNumber;
-    }
-
-    public int getWaitingTime() {
-        return waitingTime;
-    }
-
-    public void setWaitingTime(int waitingTime) {
-        this.waitingTime = waitingTime;
-    }
-
-    public int getTurnAroundTime() {
-        return turnAroundTime;
-    }
-
-    public void setTurnAroundTime(int turnAroundTime) {
-        this.turnAroundTime = turnAroundTime;
-    }
-
     public int getQuantum() {
         return quantum;
     }
@@ -78,27 +36,20 @@ public class Process {
         this.quantum = quantum;
     }
 
-    public int getCeil() {
-        return ceil;
-    }
-
     public int getPID() {
         return PID;
-    }
-
-    public void setPID(int PID) {
-        this.PID = PID;
     }
 
     public int getArrivalTime() {
         return arrivalTime;
     }
 
-    public void setCeil(int ceil) {
-        this.ceil = ceil;
-    }
-
-    public int compareTo(Process obj) {
-        return Name.compareTo(obj.Name);
+    public Process clone() {
+        return new Process(Name,
+                this.arrivalTime,
+                this.burstTime,
+                this.priorityNumber,
+                this.quantum,
+                this.PID);
     }
 }

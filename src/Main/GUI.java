@@ -12,8 +12,6 @@ import java.util.ArrayList;
 
 public class GUI extends JFrame implements ActionListener {
 
-    public static ArrayList<Process> processes = new ArrayList<>();
-
     JPanel leftSide = new JPanel();
     JLabel processes_list = new JLabel("Processes list");
     JPanel rightSide = new JPanel();
@@ -31,7 +29,6 @@ public class GUI extends JFrame implements ActionListener {
     public static JRadioButton shortestJobFirst = new JRadioButton("Shortest Job First");
     public static JRadioButton SRTF = new JRadioButton("Shortest-Remaining Time First");
     public static JPanel Algs = new JPanel();
-    JList<Process> Processes = new JList<>();
 
     static String[] col = {"PID", "Name", "Arrival", "Burst", "Priority", "Quantum"};
     public static JTable processtable = new JTable(new DefaultTableModel(null, col));
@@ -119,15 +116,14 @@ public class GUI extends JFrame implements ActionListener {
         run.addActionListener(this);
         processtable.setPreferredSize(new Dimension(380, 450));
         processtable.setShowVerticalLines(false);
-        processtable.setBounds(20,45,380, 450);
+        processtable.setBounds(20, 45, 380, 450);
         leftSide.add(processtable);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == run) {
-            Thread t = new Thread(new starter());
-            t.start();
+            starter.run();
         } else if (e.getSource() == Add) {
             System.out.println("add");
             AddProcess frameText = new AddProcess();
@@ -139,6 +135,6 @@ public class GUI extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        JFrame GUi = new GUI();
+        new GUI();
     }
 }

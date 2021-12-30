@@ -1,12 +1,5 @@
 package Main;
 
-import java.io.Serial;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -23,15 +16,18 @@ import org.jfree.data.time.SimpleTimePeriod;
 import org.jfree.ui.ApplicationFrame;
 
 import javax.swing.*;
+import java.io.Serial;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class PlotWindow extends ApplicationFrame {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public HashMap<Integer, Task> tasks;
-
-    class MyToolTipGenerator extends IntervalCategoryToolTipGenerator {
+    static class MyToolTipGenerator extends IntervalCategoryToolTipGenerator {
 
         DateFormat format;
 
@@ -43,7 +39,6 @@ public class PlotWindow extends ApplicationFrame {
         @Override
         public String generateToolTip(CategoryDataset cds, int row, int col) {
             final String s = super.generateToolTip(cds, row, col);
-            TaskSeriesCollection tsc = (TaskSeriesCollection) cds;
             StringBuilder sb = new StringBuilder(s);
             sb.deleteCharAt(sb.length() - 1);
             sb.deleteCharAt(sb.length() - 1);
@@ -67,11 +62,11 @@ public class PlotWindow extends ApplicationFrame {
         setContentPane(chartPanel);
 
         //TODO setDefaultCloseOperation of window
-        setDefaultCloseOperation(2);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
     }
 
     public GanttCategoryDataset createDataset(ArrayList<duration> processes) {
-        tasks = new HashMap<>();
+        HashMap<Integer, Task> tasks = new HashMap<>();
 
         for (duration process : processes) {
             System.out.println(process.name + " " + process.start + " " + process.end + " " + process.description);
@@ -80,14 +75,14 @@ public class PlotWindow extends ApplicationFrame {
         for (duration process : processes) {
             if (tasks.get(process.id) == null) {
                 tasks.put(process.id, new Task(process.name, new SimpleTimePeriod(process.start, process.end)));
-                continue;
+
             }
             Task t = new Task(process.name, new SimpleTimePeriod(process.start, process.end));
-            t.setDescription(process.description);
+            t.setDescription(process.name);
             tasks.get(process.id).addSubtask(t);
         }
 
-        final TaskSeriesCollection collection = new TaskSeriesCollection();
+        TaskSeriesCollection collection = new TaskSeriesCollection();
         tasks.forEach((K, V) -> {
             TaskSeries t = new TaskSeries(V.getDescription());
             t.add(V);

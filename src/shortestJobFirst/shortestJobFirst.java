@@ -28,7 +28,7 @@ public class shortestJobFirst {
         return durations;
     }
 
-    public class SJFComparator implements Comparator<Process> {
+    public static class SJFComparator implements Comparator<Process> {
 
         @Override
         public int compare(Process o1, Process o2) {

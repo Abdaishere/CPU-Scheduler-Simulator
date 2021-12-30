@@ -1,7 +1,5 @@
 package Main;
 
-import org.jfree.ui.tabbedui.VerticalLayout;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
@@ -10,13 +8,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AddProcess extends JFrame implements ActionListener {
-    private JButton addButton = new JButton("Add");
-    private JTextField Name = new JTextField();
-    private JTextField arrivalTime = new JTextField();
-    private JTextField burstTime = new JTextField();
-    private JTextField priorityNumber = new JTextField();
-    private JTextField quantum = new JTextField();
-    private JPanel main = new JPanel();
+    private final JTextField Name = new JTextField();
+    private final JTextField arrivalTime = new JTextField();
+    private final JTextField burstTime = new JTextField();
+    private final JTextField priorityNumber = new JTextField();
+    private final JTextField quantum = new JTextField();
 
     AddProcess() {
         try {
@@ -29,6 +25,7 @@ public class AddProcess extends JFrame implements ActionListener {
         this.getContentPane().setBackground(new Color(0xe6e6e6));
         this.setTitle("Add Process");
 
+        JPanel main = new JPanel();
         main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
         main.setBorder(new EmptyBorder(10, 10, 10, 10));
         this.setResizable(false);
@@ -54,6 +51,7 @@ public class AddProcess extends JFrame implements ActionListener {
         quantum.setPreferredSize(new Dimension(110, 20));
         main.add(quantum);
 
+        JButton addButton = new JButton("Add");
         addButton.setPreferredSize(new Dimension(110, 20));
         main.add(addButton);
 
@@ -62,8 +60,8 @@ public class AddProcess extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Process tmp = new Process(Name.getText(), Integer.parseInt(arrivalTime.getText()), Integer.parseInt(burstTime.getText()), Integer.parseInt(priorityNumber.getText()), Integer.parseInt(quantum.getText()), GUI.processes.size());
-        GUI.processes.add(tmp);
+        Process tmp = new Process(Name.getText(), Integer.parseInt(arrivalTime.getText()), Integer.parseInt(burstTime.getText()), Integer.parseInt(priorityNumber.getText()), Integer.parseInt(quantum.getText()), starter.processes.size());
+        starter.processes.add(tmp);
 
         Name.setText("");
         arrivalTime.setText("");

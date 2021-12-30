@@ -34,7 +34,7 @@ public class AGAT {
             }
 
             setV2(readyQueue);
-            if (readyQueue.get(0).burstTime == 0) {
+            if (!readyQueue.isEmpty() && readyQueue.get(0).burstTime == 0) {
 
                 //  finishes executing
                 durations.add(new duration(readyQueue.get(0).getName(), lastop, time, processes.get(0).getPID(), "finishes executing"));

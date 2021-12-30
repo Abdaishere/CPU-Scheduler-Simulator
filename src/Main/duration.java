@@ -5,12 +5,6 @@ public class duration {
     public int start, end, id;
     public String description;
 
-    public duration(String name, int start, int end) {
-        this.name = name;
-        this.start = start;
-        this.end = end;
-    }
-
     public duration(String name, int start, int end, int id, String description) {
         this.name = name;
         this.start = start;

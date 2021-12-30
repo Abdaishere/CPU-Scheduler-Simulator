@@ -28,7 +28,7 @@ public class PriorityScheduling {
         return durations;
     }
 
-    public class PComparator implements Comparator<Process> {
+    public static class PComparator implements Comparator<Process> {
 
         @Override
         public int compare(Process o1, Process o2) {
