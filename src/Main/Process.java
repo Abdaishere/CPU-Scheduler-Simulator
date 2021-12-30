@@ -97,4 +97,8 @@ public class Process {
     public void setCeil(int ceil) {
         this.ceil = ceil;
     }
+
+    public int compareTo(Process obj) {
+        return Name.compareTo(obj.Name);
+    }
 }

@@ -8,6 +8,7 @@ import java.util.Comparator;
 
 public class shortestJobFirst {
     public ArrayList<duration> start(ArrayList<Process> processes, int age) {
+
         ArrayList<duration> durations = new ArrayList<>();
         processes.sort(new SJFComparator());
         int time = processes.get(0).arrivalTime;

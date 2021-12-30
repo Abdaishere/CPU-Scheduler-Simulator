@@ -1,9 +1,9 @@
 package Main;
 
 public class duration {
-    String name;
-    int start, end, id;
-    String description;
+    public String name;
+    public int start, end, id;
+    public String description;
 
     public duration(String name, int start, int end) {
         this.name = name;
@@ -17,5 +17,9 @@ public class duration {
         this.end = end;
         this.description = description;
         this.id = id;
+    }
+
+    public void setEnd(int end) {
+        this.end = end;
     }
 }

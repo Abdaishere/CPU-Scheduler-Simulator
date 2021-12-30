@@ -22,6 +22,8 @@ import org.jfree.data.gantt.TaskSeriesCollection;
 import org.jfree.data.time.SimpleTimePeriod;
 import org.jfree.ui.ApplicationFrame;
 
+import javax.swing.*;
+
 public class PlotWindow extends ApplicationFrame {
 
     @Serial
@@ -53,24 +55,31 @@ public class PlotWindow extends ApplicationFrame {
 
         super(title);
 
-        final GanttCategoryDataset dataset = createDataset(processes);
-        final JFreeChart chart = createChart(dataset);
+        GanttCategoryDataset dataset = createDataset(processes);
+        JFreeChart chart = createChart(dataset);
         BarRenderer renderer = (BarRenderer) chart.getCategoryPlot().getRenderer();
         renderer.setItemMargin(-2);
 
 
-        final ChartPanel chartPanel = new ChartPanel(chart);
+        ChartPanel chartPanel = new ChartPanel(chart);
+
         chartPanel.setPreferredSize(new java.awt.Dimension(500, 300));
         setContentPane(chartPanel);
 
+        //TODO setDefaultCloseOperation of window
+        setDefaultCloseOperation(2);
     }
 
     public GanttCategoryDataset createDataset(ArrayList<duration> processes) {
         tasks = new HashMap<>();
 
         for (duration process : processes) {
+            System.out.println(process.name + " " + process.start + " " + process.end + " " + process.description);
+        }
+
+        for (duration process : processes) {
             if (tasks.get(process.id) == null) {
-                tasks.put(process.id, new Task(process.name, new SimpleTimePeriod(processes.get(0).start, processes.get(processes.size() - 1).end)));
+                tasks.put(process.id, new Task(process.name, new SimpleTimePeriod(process.start, process.end)));
                 continue;
             }
             Task t = new Task(process.name, new SimpleTimePeriod(process.start, process.end));
