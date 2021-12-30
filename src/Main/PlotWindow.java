@@ -49,6 +49,16 @@ public class PlotWindow extends ApplicationFrame {
     public PlotWindow(final String title, ArrayList<duration> processes) {
 
         super(title);
+        int avarageWait =0;
+        int avarageTurnaround =0;
+        for(duration Duration : processes){
+            int wait =Duration.start-Duration.arrivalTime;
+            avarageWait +=wait;
+            avarageTurnaround +=(wait+Duration.burstTime);
+            System.out.println(Duration.name + " ,Waiting Time :"+ wait + " ,Turnaround Time :"+ (wait+Duration.burstTime));
+        }
+        System.out.println("The avarage waiting is : "+ (avarageWait/processes.size()));
+        System.out.println("The avarage Turnaround is : "+ (avarageTurnaround/processes.size()));
 
         GanttCategoryDataset dataset = createDataset(processes);
         JFreeChart chart = createChart(dataset);

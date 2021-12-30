@@ -156,9 +156,9 @@ public class SRTF {
         for (int j = 0; j < AllProcess.size(); j++) {
             duration tmp;
             if (j != 0)
-                tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime() + 1, AllProcess.get(j).getEndTime(), AllProcess.get(j).PID, "Working");
+                tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime() + 1, AllProcess.get(j).getEndTime(), AllProcess.get(j).PID, "Working",AllProcess.get(j).BurstTime,AllProcess.get(j).ArrivalTime);
             else
-                tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime(), AllProcess.get(j).getEndTime(), AllProcess.get(j).PID, "Working");
+                tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime(), AllProcess.get(j).getEndTime(), AllProcess.get(j).PID, "Working",AllProcess.get(j).BurstTime,AllProcess.get(j).ArrivalTime);
             while (j < AllProcess.size() && tmp.id == AllProcess.get(j).PID)
                 j++;
 
