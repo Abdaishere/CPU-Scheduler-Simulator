@@ -33,6 +33,7 @@ public class starter {
         for (Process p : processes) {
             processes1.add(p.clone());
         }
+
         if (GUI.shortestJobFirst.isSelected()) {
             Window = new PlotWindow("shortestJobFirst", new shortestJobFirst().start(processes1, Integer.parseInt(GUI.Age.getText())));
         } else if (GUI.PriorityScheduling.isSelected()) {

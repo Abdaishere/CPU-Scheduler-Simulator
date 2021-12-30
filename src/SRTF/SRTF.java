@@ -3,9 +3,6 @@ package SRTF;
 import Main.duration;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Scanner;
 
 public class SRTF {
     class Process implements Comparable<Process> {
@@ -150,19 +147,17 @@ public class SRTF {
          */
         ArrayList<Process> AllProcess;
         AllProcess = Gantt_Chart(pros);
-
+        for (int i = 0; i < AllProcess.size(); i++) {
+            System.out.printf("%s %d %d %dWorking%n%n", AllProcess.get(i).name, AllProcess.get(i).getStartTime(), AllProcess.get(i).getEndTime(), AllProcess.get(i).PID);
+        }
         for (int j = 0; j < AllProcess.size(); j++) {
             duration tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime(), AllProcess.get(j).getEndTime(), AllProcess.get(j).PID, "Working");
-            while (j < AllProcess.size() && tmp.name.equals(AllProcess.get(j).getname()))
+            while (j < AllProcess.size() && tmp.id == AllProcess.get(j).PID)
                 j++;
-            if (j == AllProcess.size())
-                j--;
+
+            j--;
             tmp.setEnd(AllProcess.get(j).getEndTime());
             durations.add(tmp);
-        }
-
-        for (int j = 0; j < durations.size(); j++) {
-            System.out.println(durations.get(j).start);
         }
 
         return durations;
