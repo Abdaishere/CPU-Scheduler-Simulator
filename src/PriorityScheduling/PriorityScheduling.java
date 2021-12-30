@@ -22,7 +22,7 @@ public class PriorityScheduling {
                     shortest = j;
                 }
             }
-            durations.add(new duration(processes.get(shortest).Name, time, time += processes.get(shortest).burstTime + contextSwitching, "Done"));
+            durations.add(new duration(processes.get(shortest).Name, time, time += processes.get(shortest).burstTime + contextSwitching, processes.get(shortest).getPID(), "Done"));
             processes.remove(shortest);
         }
         return durations;

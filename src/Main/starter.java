@@ -23,7 +23,7 @@ public class starter implements Runnable {
 //
 //        System.out.println();
 
-//        PlotWindow agat = new PlotWindow("AGAT", new AGAT().start((ArrayList<Process>) Main.GUI.processes1.clone()), Main.GUI.order);
+        PlotWindow agat = new PlotWindow("AGAT", new AGAT().start((ArrayList<Process>) Main.GUI.processes.clone()));
 //        agat.pack();
 //        RefineryUtilities.centerFrameOnScreen(agat);
 //        agat.setVisible(true);

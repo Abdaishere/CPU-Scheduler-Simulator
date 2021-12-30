@@ -13,13 +13,17 @@ public class Process {
     public int ceil;
     public int PID;
 
-    public Process(String name, int arrivalTime, int burstTime, int priorityNumber, int quantum ,int PID) {
+    public Process(String name, int arrivalTime, int burstTime, int priorityNumber, int quantum, int PID) {
         Name = name;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
         this.priorityNumber = priorityNumber;
         this.quantum = quantum;
         this.PID = PID;
+    }
+
+    public String[] getData() {
+        return new String[]{String.valueOf(PID), Name, String.valueOf(arrivalTime), String.valueOf(burstTime), String.valueOf(priorityNumber), String.valueOf(quantum)};
     }
 
     public String getName() {

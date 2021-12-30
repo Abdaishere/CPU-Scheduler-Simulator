@@ -37,7 +37,7 @@ public class AGAT {
             if (readyQueue.get(0).burstTime == 0) {
 
                 //  finishes executing
-                durations.add(new duration(readyQueue.get(0).getName(), lastop, time, "finishes executing"));
+                durations.add(new duration(readyQueue.get(0).getName(), lastop, time, processes.get(0).getPID(), "finishes executing"));
 
                 lastop = time;
 
@@ -54,7 +54,7 @@ public class AGAT {
             if (readyQueue.get(0).getQuantum() - quantumleft.get(0) >= Math.round(readyQueue.get(0).getQuantum() * 0.4)) {
                 if (readyQueue.get(0).burstTime != 0 && quantumleft.get(0) == 0) {
 
-                    durations.add(new duration(readyQueue.get(0).getName(), lastop, time, "finished it’s quantum"));
+                    durations.add(new duration(readyQueue.get(0).getName(), lastop, time, processes.get(0).getPID(), "finished it’s quantum"));
                     lastop = time;
 
                     Process p = readyQueue.get(0);
@@ -69,7 +69,7 @@ public class AGAT {
 
                 } else if (Factor != 0) {
 
-                    durations.add(new duration(readyQueue.get(0).getName(), lastop, time, "swapped"));
+                    durations.add(new duration(readyQueue.get(0).getName(), lastop, time, processes.get(0).getPID(), "swapped"));
                     lastop = time;
 
                     readyQueue.get(0).setQuantum(readyQueue.get(0).getQuantum() + quantumleft.get(0));

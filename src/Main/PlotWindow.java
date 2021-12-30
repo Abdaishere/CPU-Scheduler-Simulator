@@ -27,7 +27,7 @@ public class PlotWindow extends ApplicationFrame {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public HashMap<String, Task> tasks;
+    public HashMap<Integer, Task> tasks;
 
     class MyToolTipGenerator extends IntervalCategoryToolTipGenerator {
 
@@ -49,11 +49,11 @@ public class PlotWindow extends ApplicationFrame {
         }
     }
 
-    public PlotWindow(final String title, ArrayList<duration> processes, ArrayList<String> order) {
+    public PlotWindow(final String title, ArrayList<duration> processes) {
 
         super(title);
 
-        final GanttCategoryDataset dataset = createDataset(processes, order);
+        final GanttCategoryDataset dataset = createDataset(processes);
         final JFreeChart chart = createChart(dataset);
         BarRenderer renderer = (BarRenderer) chart.getCategoryPlot().getRenderer();
         renderer.setItemMargin(-2);
@@ -65,22 +65,22 @@ public class PlotWindow extends ApplicationFrame {
 
     }
 
-    public GanttCategoryDataset createDataset(ArrayList<duration> processes, ArrayList<String> order) {
-        tasks = new LinkedHashMap<>();
-
-        for (String s : order) {
-            tasks.put(s, new Task(s, new SimpleTimePeriod(processes.get(0).start, processes.get(processes.size() - 1).end)));
-        }
+    public GanttCategoryDataset createDataset(ArrayList<duration> processes) {
+        tasks = new HashMap<>();
 
         for (duration process : processes) {
+            if (tasks.get(process.id) == null) {
+                tasks.put(process.id, new Task(process.name, new SimpleTimePeriod(processes.get(0).start, processes.get(processes.size() - 1).end)));
+                continue;
+            }
             Task t = new Task(process.name, new SimpleTimePeriod(process.start, process.end));
             t.setDescription(process.description);
-            tasks.get(process.name).addSubtask(t);
+            tasks.get(process.id).addSubtask(t);
         }
 
         final TaskSeriesCollection collection = new TaskSeriesCollection();
         tasks.forEach((K, V) -> {
-            TaskSeries t = new TaskSeries(K);
+            TaskSeries t = new TaskSeries(V.getDescription());
             t.add(V);
             collection.add(t);
         });
