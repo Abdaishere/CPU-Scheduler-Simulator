@@ -54,7 +54,6 @@ public class GUI extends JFrame implements ActionListener {
         this.setLayout(null);
         this.setResizable(false);
 
-
         this.add(leftSide);
 
         Add.setPreferredSize(new Dimension(45, 20));
@@ -69,13 +68,15 @@ public class GUI extends JFrame implements ActionListener {
         leftSide.add(processes_list);
         leftSide.setBorder(lineBorder);
 
-
         this.add(start);
         this.add(rightSide);
         rightSide.setBounds(415, 15, 385, 455);
         rightSide.setBackground(new Color(0xe6e6e6));
         rightSide.add(Options);
 
+
+        processtable.setBounds(17, 45, 380, 400);
+        this.add(processtable);
 
         processes_list.setHorizontalTextPosition(JLabel.CENTER);
         processes_list.setVerticalTextPosition(JLabel.TOP);
@@ -116,8 +117,9 @@ public class GUI extends JFrame implements ActionListener {
         run.addActionListener(this);
         processtable.setPreferredSize(new Dimension(380, 450));
         processtable.setShowVerticalLines(false);
-        processtable.setBounds(20, 45, 380, 450);
-        leftSide.add(processtable);
+        processtable.setShowHorizontalLines(false);
+
+
     }
 
     @Override

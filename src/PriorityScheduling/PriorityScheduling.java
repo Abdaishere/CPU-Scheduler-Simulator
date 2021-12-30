@@ -1,10 +1,10 @@
 package PriorityScheduling;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-
 import Main.Process;
 import Main.duration;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class PriorityScheduling {
 
@@ -22,7 +22,8 @@ public class PriorityScheduling {
                     shortest = j;
                 }
             }
-            durations.add(new duration(processes.get(shortest).Name, time, time += processes.get(shortest).burstTime + contextSwitching, processes.get(shortest).getPID(), "Done"));
+            durations.add(new duration(processes.get(shortest).Name, time, time += processes.get(shortest).burstTime, processes.get(shortest).getPID(), "Done"));
+            time += contextSwitching;
             processes.remove(shortest);
         }
         return durations;

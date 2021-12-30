@@ -99,7 +99,7 @@ public class SRTF {
         return true;
     }
 
-    private ArrayList<Process> Gantt_Chart(Process[] pros) {
+    private ArrayList<Process> Gantt_Chart(Process[] pros, int Age) {
 
         int Time = 0;
         int AtTime = 0;
@@ -108,6 +108,11 @@ public class SRTF {
             int minBurstTime = Integer.MAX_VALUE;
 
             for (Process p : pros) {
+                if (Time - p.ArrivalTime > Age) {
+                    minBurstTime = p.getBurst();
+                    obj = p;
+                    break;
+                }
                 if (!p.isCompleted() && p.getArrivalTime() <= Time && p.getBurst() < minBurstTime) {
                     minBurstTime = p.getBurst();
                     obj = p;
@@ -131,7 +136,7 @@ public class SRTF {
         return processes;
     }
 
-    public ArrayList<duration> start(ArrayList<Main.Process> processes1) {
+    public ArrayList<duration> start(ArrayList<Main.Process> processes1, int contextSwitching, int Age) {
         ArrayList<duration> durations = new ArrayList<>();
         Process[] pros = new Process[processes1.size()];
 
@@ -146,12 +151,14 @@ public class SRTF {
             p4 3 5
          */
         ArrayList<Process> AllProcess;
-        AllProcess = Gantt_Chart(pros);
-        for (int i = 0; i < AllProcess.size(); i++) {
-            System.out.printf("%s %d %d %dWorking%n%n", AllProcess.get(i).name, AllProcess.get(i).getStartTime(), AllProcess.get(i).getEndTime(), AllProcess.get(i).PID);
-        }
+        AllProcess = Gantt_Chart(pros, Age);
+
         for (int j = 0; j < AllProcess.size(); j++) {
-            duration tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime(), AllProcess.get(j).getEndTime(), AllProcess.get(j).PID, "Working");
+            duration tmp;
+            if (j != 0)
+                tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime() + 1, AllProcess.get(j).getEndTime(), AllProcess.get(j).PID, "Working");
+            else
+                tmp = new duration(AllProcess.get(j).name, AllProcess.get(j).getStartTime(), AllProcess.get(j).getEndTime(), AllProcess.get(j).PID, "Working");
             while (j < AllProcess.size() && tmp.id == AllProcess.get(j).PID)
                 j++;
 

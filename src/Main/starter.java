@@ -25,14 +25,14 @@ public class starter {
     public static void run() {
         PlotWindow Window;
         ArrayList<Process> processes1 = new ArrayList<>();
-//        processes1.add(new Process("p1", 0, 7, 4, 4, 0));
-//        processes1.add(new Process("P2", 2, 4, 9, 3, 1));
-//        processes1.add(new Process("P3", 4, 1, 3, 5, 2));
-//        processes1.add(new Process("P4", 5, 4, 8, 2, 3));
+        processes1.add(new Process("p1", 0, 7, 4, 4, 0));
+        processes1.add(new Process("P2", 2, 4, 9, 3, 1));
+        processes1.add(new Process("P3", 4, 1, 3, 5, 2));
+        processes1.add(new Process("P4", 5, 4, 8, 2, 3));
 
-        for (Process p : processes) {
-            processes1.add(p.clone());
-        }
+//        for (Process p : processes) {
+//            processes1.add(p.clone());
+//        }
 
         if (GUI.shortestJobFirst.isSelected()) {
             Window = new PlotWindow("shortestJobFirst", new shortestJobFirst().start(processes1, Integer.parseInt(GUI.Age.getText())));
@@ -41,7 +41,7 @@ public class starter {
         } else if (GUI.AGAT.isSelected()) {
             Window = new PlotWindow("AGAT", new AGAT().start(processes1));
         } else if (GUI.SRTF.isSelected()) {
-            Window = new PlotWindow("SRTF", new SRTF().start(processes1));
+            Window = new PlotWindow("SRTF", new SRTF().start(processes1,1 , Integer.parseInt(GUI.Age.getText())));
         } else {
             JOptionPane.showMessageDialog(null,
                     "Please choose a Scheduler.",
