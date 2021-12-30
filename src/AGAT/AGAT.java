@@ -8,15 +8,15 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class AGAT {
-    public static ArrayList<Process> readyQueue = new ArrayList<>();
+    public ArrayList<Process> readyQueue = new ArrayList<>();
 
-    public static ArrayList<Process> deadlist = new ArrayList<>();
-    public static ArrayList<Integer> quantumleft = new ArrayList<>();
-    public static ArrayList<Integer> Factor = new ArrayList<>();
-    public static float V1;
-    public static float V2;
+    public ArrayList<Process> deadlist = new ArrayList<>();
+    public ArrayList<Integer> quantumleft = new ArrayList<>();
+    public ArrayList<Integer> Factor = new ArrayList<>();
+    public float V1;
+    public float V2;
 
-    public static ArrayList<duration> start(ArrayList<Process> processes) {
+    public ArrayList<duration> start(ArrayList<Process> processes) {
         ArrayList<duration> durations = new ArrayList<>();
         sort(processes, Comparator.comparing(Process::getArrivalTime));
         setV1(processes);
@@ -87,11 +87,11 @@ public class AGAT {
         return durations;
     }
 
-    public static void sort(ArrayList<Process> processes, Comparator x) {
+    public void sort(ArrayList<Process> processes, Comparator x) {
         processes.sort(x);
     }
 
-    public static void setV1(ArrayList<Process> tmp) {
+    public void setV1(ArrayList<Process> tmp) {
 
         if (tmp.get(tmp.size() - 1).arrivalTime > 10) {
             V1 = (float) ((tmp.get(tmp.size() - 1).arrivalTime) / 10.0);
@@ -100,7 +100,7 @@ public class AGAT {
         }
     }
 
-    public static void setV2(ArrayList<Process> tmp) {
+    public void setV2(ArrayList<Process> tmp) {
         int maxBurstTime = 0;
         for (Process process : tmp) {
             if (process.burstTime > maxBurstTime) {
@@ -114,7 +114,7 @@ public class AGAT {
         }
     }
 
-    public static int getAGATFactor(ArrayList<Process> tmp) {
+    public int getAGATFactor(ArrayList<Process> tmp) {
         Factor.clear();
         for (Process process : tmp) {
             int factor = (10 - process.priorityNumber) + (int) Math.ceil(process.arrivalTime / V1) + (int) Math.ceil(process.burstTime / V2);

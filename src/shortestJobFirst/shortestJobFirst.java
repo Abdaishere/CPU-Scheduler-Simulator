@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class shortestJobFirst {
-    public static ArrayList<duration> start(ArrayList<Process> processes, int age) {
+    public ArrayList<duration> start(ArrayList<Process> processes, int age) {
         ArrayList<duration> durations = new ArrayList<>();
         processes.sort(new SJFComparator());
         int time = processes.get(0).arrivalTime;
@@ -27,7 +27,7 @@ public class shortestJobFirst {
         return durations;
     }
 
-    public static class SJFComparator implements Comparator<Process> {
+    public class SJFComparator implements Comparator<Process> {
 
         @Override
         public int compare(Process o1, Process o2) {
