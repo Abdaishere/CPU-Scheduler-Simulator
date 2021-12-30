@@ -8,6 +8,16 @@ import shortestJobFirst.shortestJobFirst;
 import javax.swing.*;
 import java.util.ArrayList;
 
+/*
+TODO Processes execution order
+TODO Waiting Time for each process
+TODO Turnaround Time for each process
+TODO Average Waiting Time
+TODO Average Turnaround Time
+TODO Print all history update of quantum time for each process (AGAT Scheduling)
+TODO Print all history update of AGAT factor for each process (AGAT Scheduling)
+ */
+
 public class starter {
 
     public static ArrayList<Process> processes = new ArrayList<>();
