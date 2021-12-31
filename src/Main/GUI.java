@@ -18,7 +18,7 @@ public class GUI extends JFrame implements ActionListener {
     JLabel Options = new JLabel("Options");
 
     JButton Add = new JButton("+");
-    //    JButton Del = new JButton("-");
+    JButton Del = new JButton("-");
     JPanel process = new JPanel();
     JPanel start = new JPanel();
 
@@ -31,9 +31,12 @@ public class GUI extends JFrame implements ActionListener {
     public static JPanel Algs = new JPanel();
 
     static String[] col = {"PID", "Name", "Arrival", "Burst", "Priority", "Quantum"};
-    public static JTable processtable = new JTable(new DefaultTableModel(null, col));
-    public static JLabel jLabel = new JLabel("Age");
+    public static DefaultTableModel model = new DefaultTableModel(null, col);
+    public static JTable processtable = new JTable(model);
+    public static JLabel jLabel = new JLabel("Age:");
     public static JTextField Age = new JTextField("32");
+    public static JLabel jLabel1 = new JLabel("Context Switching:");
+    public static JTextField Contix = new JTextField("1");
     JButton run = new JButton("Run");
 
     Border lineBorder = BorderFactory.createLineBorder(Color.gray);
@@ -57,9 +60,9 @@ public class GUI extends JFrame implements ActionListener {
         this.add(leftSide);
 
         Add.setPreferredSize(new Dimension(45, 20));
-//        Del.setPreferredSize(new Dimension(45, 20));
+        Del.setPreferredSize(new Dimension(45, 20));
         process.add(Add);
-//        process.add(Del);
+        process.add(Del);
         process.setBackground(Color.white);
         process.setBounds(16, 16, 100, 25);
 
@@ -108,12 +111,17 @@ public class GUI extends JFrame implements ActionListener {
 
         start.add(Age);
         Age.setPreferredSize(new Dimension(110, 20));
+
+        start.add(jLabel1);
+        start.add(Contix);
+        Contix.setPreferredSize(new Dimension(30, 20));
+
         start.setBorder(lineBorder);
         run.setPreferredSize(new Dimension(60, 20));
         start.add(run);
 
         Add.addActionListener(this);
-//        Del.addActionListener(this);
+        Del.addActionListener(this);
         run.addActionListener(this);
         processtable.setPreferredSize(new Dimension(380, 450));
         processtable.setShowVerticalLines(false);
@@ -133,6 +141,30 @@ public class GUI extends JFrame implements ActionListener {
             frameText.pack();
             frameText.setLocationRelativeTo(null);
             frameText.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        } else if (e.getSource() == Del) {
+
+            //Delete Selected Row
+            int getSelectedRowForDeletion = processtable.getSelectedRow();
+
+            //Check if their is a row selected
+            if (getSelectedRowForDeletion >= 0) {
+                while (getSelectedRowForDeletion >= 0) {
+                    int ID = Integer.parseInt(model.getValueAt(getSelectedRowForDeletion, 0).toString());
+                    System.out.println(ID);
+                    for (Process p : starter.processes) {
+                        if (p.getPID() == ID) {
+                            starter.processes.remove(p);
+                            break;
+                        }
+                    }
+                    model.removeRow(getSelectedRowForDeletion);
+                    getSelectedRowForDeletion = processtable.getSelectedRow();
+                }
+                JOptionPane.showMessageDialog(null, "Processes Deleted");
+            } else {
+                JOptionPane.showMessageDialog(null, "Unable To Delete");
+            }
+
         }
     }
 

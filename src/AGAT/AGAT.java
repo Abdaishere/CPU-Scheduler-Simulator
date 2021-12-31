@@ -3,11 +3,13 @@ package AGAT;
 import Main.Process;
 import Main.duration;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class AGAT {
+    public static StringBuilder message;
     public ArrayList<Process> readyQueue = new ArrayList<>();
 
     public ArrayList<Process> deadlist = new ArrayList<>();
@@ -17,6 +19,7 @@ public class AGAT {
     public float V2;
 
     public ArrayList<duration> start(ArrayList<Process> processes) {
+        message = new StringBuilder();
         ArrayList<duration> durations = new ArrayList<>();
         sort(processes, Comparator.comparing(Process::getArrivalTime));
         setV1(processes);
@@ -61,7 +64,7 @@ public class AGAT {
             if (readyQueue.get(0).getQuantum() - quantumleft.get(0) >= Math.round(readyQueue.get(0).getQuantum() * 0.4)) {
                 if (readyQueue.get(0).burstTime != 0 && quantumleft.get(0) == 0) {
 
-                    System.out.println(time + " factor updated :" + (10 - readyQueue.get(Factor).priorityNumber) + (int) Math.ceil(readyQueue.get(Factor).arrivalTime / V1) + (int) Math.ceil(readyQueue.get(Factor).burstTime / V2) + " " + readyQueue.get(0).getName() + "=>" + readyQueue.get(Factor).getName() + " new quantum " + readyQueue.get(Factor).getQuantum());
+                    message.append(MessageFormat.format("{0} factor updated :{1}{2}{3} {4}=>{5} new quantum {6}\n", time, 10 - readyQueue.get(Factor).priorityNumber, (int) Math.ceil(readyQueue.get(Factor).arrivalTime / V1), (int) Math.ceil(readyQueue.get(Factor).burstTime / V2), readyQueue.get(0).getName(), readyQueue.get(Factor).getName(), readyQueue.get(Factor).getQuantum()));
                     durations.add(new duration(readyQueue.get(0).getName(), lastop, time, readyQueue.get(0).getPID(), "finished it’s quantum", readyQueue.get(0).burstTime, readyQueue.get(0).arrivalTime));
                     lastop = time;
 
@@ -77,7 +80,7 @@ public class AGAT {
 
                 } else if (Factor != 0) {
 
-                    System.out.println(time + " factor updated :" + (10 - readyQueue.get(Factor).priorityNumber) + (int) Math.ceil(readyQueue.get(Factor).arrivalTime / V1) + (int) Math.ceil(readyQueue.get(Factor).burstTime / V2) + " " + readyQueue.get(0).getName() + "=>" + readyQueue.get(Factor).getName() + " new quantum " + readyQueue.get(Factor).getQuantum());
+                    message.append(MessageFormat.format("{0} factor updated :{1}{2}{3} {4}=>{5} new quantum {6}\n", time, 10 - readyQueue.get(Factor).priorityNumber, (int) Math.ceil(readyQueue.get(Factor).arrivalTime / V1), (int) Math.ceil(readyQueue.get(Factor).burstTime / V2), readyQueue.get(0).getName(), readyQueue.get(Factor).getName(), readyQueue.get(Factor).getQuantum()));
                     durations.add(new duration(readyQueue.get(0).getName(), lastop, time, readyQueue.get(0).getPID(), "swapped", readyQueue.get(0).burstTime, readyQueue.get(0).arrivalTime));
                     lastop = time;
 

@@ -13,28 +13,22 @@ import org.jfree.data.gantt.Task;
 import org.jfree.data.gantt.TaskSeries;
 import org.jfree.data.gantt.TaskSeriesCollection;
 import org.jfree.data.time.SimpleTimePeriod;
-import org.jfree.ui.ApplicationFrame;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.Serial;
-import java.text.DateFormat;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class PlotWindow extends ApplicationFrame {
+public class PlotWindow extends JFrame {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
     static class MyToolTipGenerator extends IntervalCategoryToolTipGenerator {
 
-        DateFormat format;
-
-        private MyToolTipGenerator(String value, DateFormat format) {
-            super(value, format);
-            this.format = format;
-        }
 
         @Override
         public String generateToolTip(CategoryDataset cds, int row, int col) {
@@ -46,9 +40,12 @@ public class PlotWindow extends ApplicationFrame {
         }
     }
 
-    public PlotWindow(final String title, ArrayList<duration> processes) {
+    StringBuilder message = new StringBuilder();
+    String type = "ERROR";
 
+    public PlotWindow(final String title, ArrayList<duration> processes) {
         super(title);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         int averageWait = 0;
         int averageTurnaround = 0;
         HashMap<Integer, Boolean> occurred = new HashMap<>();
@@ -57,33 +54,40 @@ public class PlotWindow extends ApplicationFrame {
                 int wait = Duration.start - Duration.arrivalTime;
                 averageWait += wait;
                 averageTurnaround += (wait + Duration.burstTime);
-                System.out.println(Duration.name + " ,Waiting Time :" + wait + " ,Turnaround Time :" + (wait + Duration.burstTime));
+                message.append(MessageFormat.format("{0} ,Waiting Time :{1} ,Turnaround Time :{2}\n", Duration.name, wait, wait + Duration.burstTime));
                 occurred.put(Duration.id, true);
             }
         }
-        System.out.println("The average waiting is : " + (averageWait / processes.size()));
-        System.out.println("The average Turnaround is : " + (averageTurnaround / processes.size()));
+        message.append(MessageFormat.format("The average waiting is : {0}\n", averageWait / processes.size()));
+        message.append(MessageFormat.format("The average Turnaround is : {0}\n", averageTurnaround / processes.size()));
 
         GanttCategoryDataset dataset = createDataset(processes);
         JFreeChart chart = createChart(dataset);
         BarRenderer renderer = (BarRenderer) chart.getCategoryPlot().getRenderer();
         renderer.setItemMargin(-2);
 
-
         ChartPanel chartPanel = new ChartPanel(chart);
 
-        chartPanel.setPreferredSize(new java.awt.Dimension(500, 300));
+        chartPanel.setPreferredSize(new Dimension(500, 300));
         setContentPane(chartPanel);
 
-        //TODO setDefaultCloseOperation of window
-        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        if (GUI.shortestJobFirst.isSelected()) {
+            type = "shortestJobFirst";
+        } else if (GUI.PriorityScheduling.isSelected()) {
+            type = "PriorityScheduling";
+        } else if (GUI.AGAT.isSelected()) {
+            type = "AGAT";
+        } else if (GUI.SRTF.isSelected()) {
+            type = "SRTF";
+        }
     }
 
     public GanttCategoryDataset createDataset(ArrayList<duration> processes) {
         HashMap<Integer, Task> tasks = new HashMap<>();
 
         for (duration process : processes) {
-            System.out.println(process.name + " " + process.start + " " + process.end + " " + process.description);
+            message.append(MessageFormat.format("{0} {1} {2} {3}\n", process.name, process.start, process.end, process.description));
         }
 
         for (duration process : processes) {
@@ -117,9 +121,7 @@ public class PlotWindow extends ApplicationFrame {
 
         CategoryPlot plot = chart.getCategoryPlot();
 
-        plot.getRenderer().setDefaultToolTipGenerator(
-                new MyToolTipGenerator(
-                        "{0}, {1}: ", DateFormat.getTimeInstance(DateFormat.SHORT)));
+        plot.getRenderer().setDefaultToolTipGenerator(new MyToolTipGenerator());
 
         DateAxis axis = (DateAxis) plot.getRangeAxis();
 

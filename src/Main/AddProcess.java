@@ -13,6 +13,7 @@ public class AddProcess extends JFrame implements ActionListener {
     private final JTextField burstTime = new JTextField();
     private final JTextField priorityNumber = new JTextField();
     private final JTextField quantum = new JTextField();
+    static int i = 0;
 
     AddProcess() {
         try {
@@ -23,7 +24,7 @@ public class AddProcess extends JFrame implements ActionListener {
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.getContentPane().setBackground(new Color(0xe6e6e6));
-        this.setTitle("Add Process");
+        this.setTitle(String.valueOf(i));
 
         JPanel main = new JPanel();
         main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
@@ -60,16 +61,22 @@ public class AddProcess extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Process tmp = new Process(Name.getText(), Integer.parseInt(arrivalTime.getText()), Integer.parseInt(burstTime.getText()), Integer.parseInt(priorityNumber.getText()), Integer.parseInt(quantum.getText()), starter.processes.size());
-        starter.processes.add(tmp);
+        try {
+            Process tmp = new Process(Name.getText(), Integer.parseInt(arrivalTime.getText()), Integer.parseInt(burstTime.getText()), Integer.parseInt(priorityNumber.getText()), Integer.parseInt(quantum.getText()), i++);
+            starter.processes.add(tmp);
 
-        Name.setText("");
-        arrivalTime.setText("");
-        burstTime.setText("");
-        priorityNumber.setText("");
-        quantum.setText("");
+            Name.setText("");
+            arrivalTime.setText("");
+            burstTime.setText("");
+            priorityNumber.setText("");
+            quantum.setText("");
 
-        DefaultTableModel model = (DefaultTableModel) GUI.processtable.getModel();
-        model.addRow(tmp.getData());
+            GUI.model.addRow(tmp.getData());
+        }catch (Exception ignored){
+            JOptionPane.showMessageDialog(null,
+                    "Please Fill All Fields.",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+        }
     }
 }
